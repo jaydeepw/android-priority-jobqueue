@@ -14,22 +14,55 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
+.directory
+project.properties
+
+#Eclipse specific ignores
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/*
+.settings/
+.loadpath
+
+
+#Android Studio .gitignore
+#built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
 
 # Eclipse project files
 .classpath
 .project
+
+# Android Studio
 .idea
-.css
-*.html
-.img
-.DS_Store
-jobqueue/out
-coverage-report
-junitvmwatcher*.properties
-jobqueue/cobertura.ser
-jobqueue/javadoc
-out
-*.iml
-pages
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
-build
+build/
