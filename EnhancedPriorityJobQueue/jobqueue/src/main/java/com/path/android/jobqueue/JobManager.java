@@ -622,7 +622,7 @@ public class JobManager implements NetworkEventProvider.Listener {
      * @param isPersistent
      * @return
      */
-    public JobHolder findJobById(Long id, boolean isPersistent) {
+    public Job findJobById(Long id, boolean isPersistent) {
         JobHolder holder;
         if (isPersistent) {
             synchronized (persistentJobQueue) {
@@ -633,12 +633,19 @@ public class JobManager implements NetworkEventProvider.Listener {
                 holder = nonPersistentJobQueue.findJobById(id);
             }
         }
-        return holder;
+        return (Job) holder.getBaseJob();
     }
 
-    public ArrayList<JobHolder> getAllJobs(boolean isPersistent) {
-        // TODO: provide the implementation for this.
-        return new ArrayList<JobHolder>();
+    public ArrayList<Job> getAllJobs(boolean isPersistent) {
+        if (isPersistent) {
+            synchronized (persistentJobQueue) {
+                return persistentJobQueue.getAllJobs();
+            }
+        } else {
+            synchronized (nonPersistentJobQueue) {
+                return nonPersistentJobQueue.getAllJobs();
+            }
+        }
     }
 
 }

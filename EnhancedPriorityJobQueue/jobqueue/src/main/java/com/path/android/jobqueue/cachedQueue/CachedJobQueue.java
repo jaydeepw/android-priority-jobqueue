@@ -1,8 +1,10 @@
 package com.path.android.jobqueue.cachedQueue;
 
+import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.JobHolder;
 import com.path.android.jobqueue.JobQueue;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -99,8 +101,8 @@ public class CachedJobQueue implements JobQueue {
     }
 
     @Override
-    public JobHolder getAllJobs() {
-        return null;
+    public ArrayList<Job> getAllJobs() {
+        return delegate.getAllJobs();
     }
 
     private static class Cache {

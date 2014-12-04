@@ -1,5 +1,6 @@
 package com.path.android.jobqueue;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -79,5 +80,5 @@ public interface JobQueue {
      */
     JobHolder findJobById(long id);
 
-    JobHolder getAllJobs();
+    ArrayList<Job> getAllJobs();
 }

@@ -1,5 +1,6 @@
 package com.path.android.jobqueue.nonPersistentQueue;
 
+import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.JobHolder;
 import com.path.android.jobqueue.JobManager;
 import com.path.android.jobqueue.JobQueue;
@@ -149,7 +150,7 @@ public class NonPersistentPriorityQueue implements JobQueue {
     }
 
     @Override
-    public JobHolder getAllJobs() {
+    public ArrayList<Job> getAllJobs() {
         return null;
     }
 

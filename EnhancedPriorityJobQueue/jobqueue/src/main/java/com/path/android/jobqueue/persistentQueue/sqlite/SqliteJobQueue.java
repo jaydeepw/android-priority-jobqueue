@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 import com.path.android.jobqueue.BaseJob;
+import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.JobHolder;
 import com.path.android.jobqueue.JobManager;
 import com.path.android.jobqueue.JobQueue;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -376,9 +379,32 @@ public class SqliteJobQueue implements JobQueue {
         public <T extends BaseJob> T deserialize(byte[] bytes) throws IOException, ClassNotFoundException;
     }
 
-
     @Override
-    public JobHolder getAllJobs() {
-        return null;
+    public ArrayList<Job> getAllJobs() {
+        Cursor cursor = db.rawQuery(sqlHelper.FIND_ALL_QUERY, null);
+
+        try {
+            if(cursor == null) {
+                JqLog.d(" cursor is null");
+                return null;
+            }
+
+            Log.d(SqliteJobQueue.class.getSimpleName(), " cursor count: " + cursor.getCount());
+
+            ArrayList<Job> jobs = new ArrayList<Job>();
+
+            while(cursor.moveToNext()) {
+                jobs.add((Job) createJobHolderFromCursor(cursor).getBaseJob());
+            }
+
+            return jobs;
+        } catch (InvalidBaseJobException e) {
+            JqLog.e(e, "invalid job on getAllJobs");
+            return null;
+        } finally {
+            if(cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
     }
 }
