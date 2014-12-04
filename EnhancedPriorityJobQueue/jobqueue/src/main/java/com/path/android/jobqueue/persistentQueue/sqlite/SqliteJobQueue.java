@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
+
 import com.path.android.jobqueue.BaseJob;
 import com.path.android.jobqueue.JobHolder;
 import com.path.android.jobqueue.JobManager;
@@ -178,11 +179,6 @@ public class SqliteJobQueue implements JobQueue {
         }
     }
 
-    @Override
-    public JobHolder getAllJobs() {
-        return null;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -308,7 +304,6 @@ public class SqliteJobQueue implements JobQueue {
                 cursor.getLong(DbOpenHelper.DELAY_UNTIL_NS_COLUMN.columnIndex),
                 cursor.getLong(DbOpenHelper.RUNNING_SESSION_ID_COLUMN.columnIndex)
         );
-
     }
 
     private BaseJob safeDeserialize(byte[] bytes) {
@@ -379,5 +374,11 @@ public class SqliteJobQueue implements JobQueue {
     public static interface JobSerializer {
         public byte[] serialize(Object object) throws IOException;
         public <T extends BaseJob> T deserialize(byte[] bytes) throws IOException, ClassNotFoundException;
+    }
+
+
+    @Override
+    public JobHolder getAllJobs() {
+        return null;
     }
 }
