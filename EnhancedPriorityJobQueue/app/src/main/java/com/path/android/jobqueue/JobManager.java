@@ -125,6 +125,20 @@ public class JobManager implements NetworkEventProvider.Listener {
         return cnt;
     }
 
+    public JobHolder findJobById(Long id, boolean isPersistent) {
+        JobHolder holder;
+        if(isPersistent) {
+            synchronized (persistentJobQueue) {
+                holder = persistentJobQueue.findJobById(id);
+            }
+        } else {
+            synchronized (nonPersistentJobQueue) {
+                holder = nonPersistentJobQueue.findJobById(id);
+            }
+        }
+        return holder;
+    }
+
     private int countReadyJobs(boolean hasNetwork) {
         //TODO we can cache this
         int total = 0;
